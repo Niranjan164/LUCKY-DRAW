@@ -130,8 +130,8 @@
     }
 
     function registerUser() {
-      const username = document.getElementById('reg-username').value;
-      const password = document.getElementById('reg-password').value;
+      const username = document.getElementById('reg-username').value.trim();
+      const password = document.getElementById('reg-password').value.trim();
 
       if (username && password) {
         const userData = { username, password };
@@ -146,8 +146,8 @@
     }
 
     function loginUser() {
-      const username = document.getElementById('login-username').value;
-      const password = document.getElementById('login-password').value;
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value.trim();
 
       const stored = localStorage.getItem('NIRANJAN');
       if (stored) {
@@ -172,6 +172,7 @@
       document.querySelectorAll('input').forEach(input => {
         input.addEventListener('focus', playClick);
         input.addEventListener('click', playClick);
+        input.addEventListener('input', playClick);  // Play sound on typing
       });
     }
   </script>
