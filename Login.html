@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUCKY DRAW</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #0f0f0f 0%, #080808 100%);
+      font-family: 'Orbitron', sans-serif;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      user-select: none;
+    }
+
+    .container {
+      background: linear-gradient(145deg, #1c1c1c, #111);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      width: 330px;
+      text-align: center;
+      border: 2px solid cyan;
+    }
+
+    h1 {
+      color: #00ff00;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px #00ff0077;
+    }
+
+    input {
+      background-color: #202020;
+      color: #ff3b3b;
+      border: 1px solid cyan;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+      width: 90%;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: cyan;
+      box-shadow: 0 0 10px cyan;
+    }
+
+    button {
+      background: cyan;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px cyan;
+    }
+
+    button:hover {
+      background-color: #00e5ff;
+      transform: scale(1.05);
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .success { color: #00e676; }
+    .error { color: #ff5252; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LUCKY DRAW</h1>
+    <div id="form-area">
+      <!-- Form will be loaded here -->
+    </div>
+    <p id="message"></p>
+    <audio id="click-sound" src="https://raw.githubusercontent.com/Niranjan164/Game/main/click.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    const formArea = document.getElementById('form-area');
+    const message = document.getElementById('message');
+    const clickSound = document.getElementById('click-sound');
+
+    function playClick() {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const stored = localStorage.getItem('NIRANJAN');
+      if (stored) {
+        showLoginForm();
+      } else {
+        showRegistrationForm();
+      }
+    });
+
+    function showRegistrationForm() {
+      formArea.innerHTML = `
+        <input type="text" id="reg-username" placeholder="Create Username" />
+        <input type="password" id="reg-password" placeholder="Create Password" />
+        <button onclick="playClick(); registerUser()">Register</button>
+      `;
+
+      addInputSoundEvents();
+    }
+
+    function showLoginForm() {
+      formArea.innerHTML = `
+        <input type="text" id="login-username" placeholder="Enter Username" />
+        <input type="password" id="login-password" placeholder="Enter Password" />
+        <button onclick="playClick(); loginUser()">Login</button>
+      `;
+
+      addInputSoundEvents();
+    }
+
+    function registerUser() {
+      const username = document.getElementById('reg-username').value;
+      const password = document.getElementById('reg-password').value;
+
+      if (username && password) {
+        const userData = { username, password };
+        localStorage.setItem('NIRANJAN', JSON.stringify(userData));
+        message.textContent = 'Registration Successful! Now login.';
+        message.className = 'success';
+        setTimeout(showLoginForm, 2000);
+      } else {
+        message.textContent = 'Please enter all fields.';
+        message.className = 'error';
+      }
+    }
+
+    function loginUser() {
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+
+      const stored = localStorage.getItem('NIRANJAN');
+      if (stored) {
+        const userData = JSON.parse(stored);
+        if (username === userData.username && password === userData.password) {
+          message.textContent = 'Login Successful!';
+          message.className = 'success';
+          setTimeout(() => {
+            window.location.href = 'https://niranjan164.github.io/Game/NiranjanGame.html';
+          }, 1000);
+        } else {
+          message.textContent = 'Incorrect credentials.';
+          message.className = 'error';
+        }
+      } else {
+        message.textContent = 'No registered user. Please register first.';
+        message.className = 'error';
+      }
+    }
+
+    function addInputSoundEvents() {
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('focus', playClick);
+        input.addEventListener('click', playClick);
+      });
+    }
+  </script>
+</body>
+</html>
