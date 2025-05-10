@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lucky Draw Intro</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #intro-frame {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      display: none;
+    }
+
+    #begin-btn {
+      font-size: 28px;
+      color: red;
+      padding: 20px 60px;
+      border: 4px solid #00ff00;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ff00, 0 0 40px rgba(255, 0, 0, 0.6);
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px red;
+    }
+
+    #begin-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #00ff00, 0 0 60px rgba(255, 0, 0, 0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <iframe id="intro-frame" src="https://niranjan164.github.io/LUCKY-DRAW/Introduction.html"></iframe>
+
+  <div id="overlay">
+    <button id="begin-btn">BEGIN</button>
+  </div>
+
+  <audio id="click-sound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const btn = document.getElementById('begin-btn');
+    const clickSound = document.getElementById('click-sound');
+
+    setTimeout(() => {
+      overlay.style.display = 'flex';
+    }, 23000); // Show after 23 seconds
+
+    btn.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
+      setTimeout(() => {
+        window.location.href = 'https://niranjan164.github.io/LUCKY-DRAW/main.html';
+      }, 300); // Delay for click sound
+    });
+  </script>
+
+</body>
+</html>
