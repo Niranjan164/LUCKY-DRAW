@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LUCKY DRAW</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      border: 2px solid cyan;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 0 20px cyan;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      color: cyan;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: orange;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    #statusScreen {
+      display: none;
+      flex-direction: column;
+    }
+
+    #statusMsg {
+      color: lime;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3"></audio>
+
+  <div class="container" id="mainMenu">
+    <h1>LUCKY DRAW</h1>
+    <button onclick="openPage('https://niranjan164.github.io/LUCKY-DRAW/Invest.html')">INVEST MONEY</button>
+    <button onclick="openPage('https://niranjan164.github.io/LUCKY-DRAW/send.html')">SHARE APK GET MONEY</button>
+    <button onclick="showStatus()">STATUS</button>
+  </div>
+
+  <div class="container" id="statusScreen">
+    <h1>LUCKY DRAW</h1>
+    <div id="statusMsg">CHECKING...</div>
+    <button onclick="goBack()">BACK</button>
+  </div>
+
+  <script>
+    const sound = document.getElementById("clickSound");
+
+    function playSound() {
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    function openPage(url) {
+      playSound();
+      setTimeout(() => {
+        window.location.href = url;
+      }, 200);
+    }
+
+    function showStatus() {
+      playSound();
+      document.getElementById("mainMenu").style.display = "none";
+      document.getElementById("statusScreen").style.display = "flex";
+
+      const msg = document.getElementById("statusMsg");
+      const storedTime = localStorage.getItem("time");
+
+      if (storedTime) {
+        const now = Date.now();
+        const diff = now - parseInt(storedTime);
+        const hours = diff / (1000 * 60 * 60);
+
+        if (hours < 24) {
+          msg.innerText = "YOUR REQUEST IS UNDER PROCESSING...";
+        } else {
+          msg.innerText = "PLEASE INVEST OR SHARE APK FIRST";
+        }
+      } else {
+        msg.innerText = "PLEASE INVEST OR SHARE APK FIRST";
+      }
+    }
+
+    function goBack() {
+      playSound();
+      document.getElementById("statusScreen").style.display = "none";
+      document.getElementById("mainMenu").style.display = "block";
+    }
+  </script>
+</body>
+</html>
