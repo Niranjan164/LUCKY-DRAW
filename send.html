@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lucky Draw Entry</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 6px;
+      border: none;
+      width: 260px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: orange;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 15px white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form">
+    <h2>Lucky Draw </h2>
+    <input type="text" id="username" placeholder="Enter your name">
+    <input type="text" id="phonepay" placeholder="PhonePe number">
+    <input type="text" id="ref" placeholder="Transaction ID">
+    <button id="sendBtn">Send </button>
+  </div>
+
+  <!-- Click sound -->
+  <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3"></audio>
+
+  <script>
+    const clickSound = document.getElementById('clickSound');
+    const sendBtn = document.getElementById('sendBtn');
+
+    sendBtn.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      const name = document.getElementById('username').value;
+      const phone = document.getElementById('phonepay').value;
+      const ref = document.getElementById('ref').value;
+
+      const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
+      const smsUrl = `sms:9515888385?body=${message}`;
+      window.location.href = smsUrl;
+    });
+
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('keydown', () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+      });
+    });
+  </script>
+</body>
+</html>
