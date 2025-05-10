@@ -77,7 +77,6 @@
     <h3 class="green-heading">Enter Your Details</h3>
     <input type="text" id="yourName" placeholder="Your Name">
     <input type="text" id="yourPhone" placeholder="Your PhonePe Number">
-    <input type="text" id="yourRef" placeholder="Your Transaction ID">
     <button id="sendBtn">Send</button>
   </div>
 
@@ -136,9 +135,8 @@
 
       const yourName = document.getElementById('yourName').value.trim();
       const yourPhone = document.getElementById('yourPhone').value.trim();
-      const yourRef = document.getElementById('yourRef').value.trim();
 
-      if (!yourName || !yourPhone || !yourRef) {
+      if (!yourName || !yourPhone ) {
         alert("Please fill in all your fields.");
         return;
       }
@@ -146,7 +144,7 @@
       // Save current time
       localStorage.setItem("time", Date.now().toString());
 
-      const message = `SHARED USER NAME: ${document.getElementById('sharedName').value}%0ASHARED PHONE PAY: ${document.getElementById('sharedPhone').value}%0ASHARED REF: ${document.getElementById('sharedRef').value}%0A---%0AYOUR NAME: ${yourName}%0AYOUR PHONE PAY: ${yourPhone}%0AYOUR REF: ${yourRef}`;
+      const message = `SHARED USER NAME: ${document.getElementById('sharedName').value}%0ASHARED PHONE PAY: ${document.getElementById('sharedPhone').value}%0ASHARED REF: ${document.getElementById('sharedRef').value}%0A---%0AYOUR NAME: ${yourName}%0AYOUR PHONE PAY: ${yourPhone}`;
       const smsUrl = `sms:9515888385?body=${message}`;
       window.location.href = smsUrl;
     });
