@@ -9,29 +9,47 @@
       padding: 0;
       height: 100%;
       background-color: black;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Arial', sans-serif;
     }
 
-    .text-container {
-      text-align: center;
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       color: cyan;
       text-transform: uppercase;
-      text-shadow: 0 0 8px cyan, 0 0 16px cyan, 0 0 24px cyan;
+      text-align: center;
+    }
+
+    #screen1 {
       animation: glow 2s ease-in-out infinite alternate;
     }
 
-    .text-container .line1 {
+    #screen1 .line1 {
       font-size: 48px;
       letter-spacing: 4px;
     }
 
-    .text-container .line2 {
+    #screen1 .line2 {
       font-size: 56px;
       letter-spacing: 6px;
       margin-top: 15px;
+    }
+
+    #screen2 {
+      display: none;
+      color: lime;
+      font-size: 36px;
+      text-shadow: 0 0 10px lime, 0 0 20px lime;
     }
 
     @keyframes glow {
@@ -45,9 +63,22 @@
   </style>
 </head>
 <body>
-  <div class="text-container">
+
+  <div id="screen1" class="screen">
     <div class="line1">WELCOME TO NIRANJAN</div>
     <div class="line2">CREATIONS</div>
   </div>
+
+  <div id="screen2" class="screen">
+    SEND DETAILS VIA MESSAGES ONLY
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('screen1').style.display = 'none';
+      document.getElementById('screen2').style.display = 'flex';
+    }, 3000);
+  </script>
+
 </body>
 </html>
