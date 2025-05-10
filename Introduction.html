@@ -13,21 +13,41 @@
       justify-content: center;
       align-items: center;
       font-family: 'Arial', sans-serif;
-      color: cyan;
-      text-transform: uppercase;
     }
 
-    .center-text {
+    .text-container {
       text-align: center;
-      font-size: 36px;
-      line-height: 1.5;
+      color: cyan;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px cyan, 0 0 16px cyan, 0 0 24px cyan;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .text-container .line1 {
+      font-size: 48px;
+      letter-spacing: 4px;
+    }
+
+    .text-container .line2 {
+      font-size: 56px;
+      letter-spacing: 6px;
+      margin-top: 15px;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 4px cyan, 0 0 10px cyan;
+      }
+      to {
+        text-shadow: 0 0 20px cyan, 0 0 35px cyan;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="center-text">
-    <div>Welcome To Niranjan</div>
-    <div>Creations</div>
+  <div class="text-container">
+    <div class="line1">WELCOME TO NIRANJAN</div>
+    <div class="line2">CREATIONS</div>
   </div>
 </body>
 </html>
