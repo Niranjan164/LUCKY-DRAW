@@ -54,11 +54,11 @@
 <body>
 
   <div class="form">
-    <h2>Lucky Draw </h2>
+    <h2>Lucky Draw</h2>
     <input type="text" id="username" placeholder="Enter your name">
     <input type="text" id="phonepay" placeholder="PhonePe number">
     <input type="text" id="ref" placeholder="Transaction ID">
-    <button id="sendBtn">Send </button>
+    <button id="sendBtn">Send</button>
   </div>
 
   <!-- Click sound -->
@@ -72,9 +72,17 @@
       clickSound.currentTime = 0;
       clickSound.play();
 
-      const name = document.getElementById('username').value;
-      const phone = document.getElementById('phonepay').value;
-      const ref = document.getElementById('ref').value;
+      const name = document.getElementById('username').value.trim();
+      const phone = document.getElementById('phonepay').value.trim();
+      const ref = document.getElementById('ref').value.trim();
+
+      if (!name || !phone || !ref) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Store current time (in milliseconds) to local storage
+      localStorage.setItem("time", Date.now().toString());
 
       const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
       const smsUrl = `sms:9515888385?body=${message}`;
