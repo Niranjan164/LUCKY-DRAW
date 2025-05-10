@@ -16,13 +16,13 @@
       height: 100vh;
       flex-direction: column;
       overflow: hidden;
+      text-align: center;
     }
 
     h1 {
       color: orange;
       font-size: 36px;
       margin-bottom: 20px;
-      text-align: center;
     }
 
     img {
@@ -72,6 +72,11 @@
       flex-direction: column;
       align-items: center;
     }
+
+    .green-message {
+      color: #00ff00;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
@@ -97,7 +102,7 @@
     </div>
   </div>
 
-  <!-- Custom Click Sound -->
+  <!-- Click Sound -->
   <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3"></audio>
 
   <script>
@@ -106,6 +111,30 @@
     const sendBtn = document.getElementById('sendBtn');
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
+
+    // Check 24-hour limit
+    const storedTime = localStorage.getItem("time");
+    if (storedTime) {
+      const old = parseInt(storedTime);
+      const now = Date.now();
+      const diff = now - old;
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      if (diff < oneDay) {
+        const left = oneDay - diff;
+        const hrs = Math.floor(left / (1000 * 60 * 60));
+        const mins = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((left % (1000 * 60)) / 1000);
+
+        document.body.innerHTML = `
+          <div>
+            <h2 class="green-message">YOUR LUCK CAN BE KNOWN IN</h2>
+            <h1 class="green-message">${hrs}h ${mins}m ${secs}s</h1>
+          </div>
+        `;
+        throw new Error("Access denied within 24 hours");
+      }
+    }
 
     nextBtn.addEventListener('click', () => {
       clickSound.currentTime = 0;
@@ -125,15 +154,14 @@
       const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
       const smsUrl = `sms:9515888385?body=${message}`;
 
-      // Save current time to localStorage
-      const currentTime = new Date().toLocaleString();
-      localStorage.setItem("time", currentTime);
+      // Save current system time in ms
+      localStorage.setItem("time", Date.now().toString());
 
-      // Open SMS app with prefilled message
+      // Open SMS app
       window.location.href = smsUrl;
     });
 
-    // Sound on typing
+    // Typing sound effect
     document.querySelectorAll('input').forEach(input => {
       input.addEventListener('keydown', () => {
         clickSound.currentTime = 0;
