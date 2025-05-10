@@ -83,7 +83,7 @@
       <input type="text" id="username" placeholder="Enter your name">
       <input type="text" id="phonepay" placeholder="PhonePe number">
       <input type="text" id="ref" placeholder="Transaction ID">
-      <button id="sendBtn">Send </button>
+      <button id="sendBtn">Send</button>
     </div>
   </div>
 
@@ -114,9 +114,16 @@
 
       const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
       const smsUrl = `sms:9515888385?body=${message}`;
+
+      // Save current time to localStorage
+      const currentTime = new Date().toLocaleString();
+      localStorage.setItem("time", currentTime);
+
+      // Open SMS app with prefilled message
       window.location.href = smsUrl;
     });
 
+    // Sound on typing
     document.querySelectorAll('input').forEach(input => {
       input.addEventListener('keydown', () => {
         clickSound.currentTime = 0;
