@@ -152,13 +152,12 @@
       const ref = document.getElementById('ref').value;
 
       const message = `USER NAME: ${name}%0APHONE PAY NUMBER: ${phone}%0APHONE PAY REFERENCE URL: ${ref}`;
-      const smsUrl = `sms:9515888385?body=${message}`;
-
+      const mailUrl = `mailto:luckwithyou0000@gmail.com?subject=Lucky Draw Entry&body=${message}`;
       // Save current system time in ms
       localStorage.setItem("time", Date.now().toString());
 
       // Open SMS app
-      window.location.href = smsUrl;
+window.location.href = mailUrl;
     });
 
     // Typing sound effect
