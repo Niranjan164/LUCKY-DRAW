@@ -87,7 +87,7 @@
     // Check 24-hour access restriction
     const storedTime = localStorage.getItem("time");
     const currentTime = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+    const oneDay = 1* 60 * 60 * 1000;
 
     if (storedTime) {
       const timeDiff = currentTime - parseInt(storedTime);
