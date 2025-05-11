@@ -105,7 +105,7 @@
         const diff = now - parseInt(storedTime);
         const hours = diff / (1000 * 60 * 60);
 
-        if (hours < 24) {
+        if (hours < 1) {
           msg.innerText = "YOUR REQUEST IS UNDER PROCESSING...";
         } else {
           msg.innerText = "PLEASE INVEST OR SHARE APK FIRST";
